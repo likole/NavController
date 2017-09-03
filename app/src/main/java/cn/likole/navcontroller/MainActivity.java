@@ -4,6 +4,7 @@ package cn.likole.navcontroller;
 import android.support.v7.app.AppCompatActivity;
         import android.view.View;
         import android.widget.Button;
+        import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -12,6 +13,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button button_b;
     private Button button_l;
     private Button button_r;
+    private Button button_s;
+    private EditText editText;
 
     private Client client;
 
@@ -35,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button_r= (Button) findViewById(R.id.button_r);
         button_f= (Button) findViewById(R.id.button_fd);
         button_b= (Button) findViewById(R.id.button_bk);
+        button_s= (Button) findViewById(R.id.button_send);
+        editText= (EditText) findViewById(R.id.editText);
     }
 
     private void setListener(){
@@ -43,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button_r.setOnClickListener(this);
         button_b.setOnClickListener(this);
         button_f.setOnClickListener(this);
+        button_s.setOnClickListener(this);
     }
 
     @Override
@@ -89,6 +95,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void run() {
                         client.setMsg("bk");
+                        client.sendMessage();
+                    }
+                }).start();
+                break;
+            case R.id.button_send:
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        client.setMsg(editText.getText().toString());
                         client.sendMessage();
                     }
                 }).start();
